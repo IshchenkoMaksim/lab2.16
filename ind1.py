@@ -81,7 +81,7 @@ def save_routes(file_name, way):
         json.dump(way, f, ensure_ascii=False, indent=4)
 
 
-def load_workers(file_name):
+def load_routes(file_name):
     """
     Загрузить все пути из файла JSON.
     """
@@ -181,7 +181,7 @@ def main():
             file_name = parts[1]
 
             # Сохранить данные в файл с заданным именем.
-            routes = load_workers(file_name)
+            routes = load_routes(file_name)
 
         elif command == 'help':
             # Вывести справку о работе с программой.
