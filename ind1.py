@@ -4,6 +4,7 @@
 import sys
 import json
 import jsonschema
+from datetime import datetime
 
 
 def get_route():
@@ -13,6 +14,12 @@ def get_route():
     destination = input("Пункт назначения? ")
     number = input("Номер поезда? ")
     time = input("Время отправления?(формат чч:мм) ")
+
+    try:
+        datetime.strptime(time, "%H:%M")
+    except ValueError:
+        print("Неправильный формат времени", file=sys.stderr)
+        exit(1)
 
     return {
         'destination': destination,
@@ -62,7 +69,8 @@ def select_routes(way, period):
     result = []
 
     for route in way:
-        time_route = tuple(route.get('time').split(':'))
+        time_route = route.get('time')
+        time_route = datetime.strptime(time_route, "%H:%M")
         if period < time_route:
             result.append(route)
 
@@ -159,8 +167,14 @@ def main():
             display_routes(routes)
 
         elif command == 'select':
-            time_select = tuple(input("Выберите время отправления"
-                                      "(формат чч:мм): ").split(':'))
+            time_select = input("Выберите время отправления(формат чч:мм): ")
+
+            try:
+                time_select = datetime.strptime(time_select, "%H:%M")
+            except ValueError:
+                print("Неправильный формат времени", file=sys.stderr)
+                exit(1)
+
             selected = select_routes(routes, time_select)
             # Отобразить выбранные маршруты.
             display_routes(selected)
