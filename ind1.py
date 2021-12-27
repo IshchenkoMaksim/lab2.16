@@ -94,30 +94,9 @@ def load_routes(file_name):
     Загрузить все пути из файла JSON.
     """
 
-    schema = {
-        "type": "array",
-        "items": [
-            {
-                "type": "object",
-                "properties": {
-                    "destination": {
-                        "type": "string"
-                    },
-                    "number": {
-                        "type": "string"
-                    },
-                    "time": {
-                        "type": "string"
-                    }
-                },
-                "required": [
-                    "destination",
-                    "number",
-                    "time"
-                ]
-            }
-        ]
-    }
+    # Открыть файл с JSON schema.
+    with open("schema.json", 'r', encoding="utf-8") as schem:
+        schema = json.load(schem)
 
     # Открыть файл с заданным именем для чтения.
     with open(file_name, "r", encoding="utf-8") as fl:
